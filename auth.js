@@ -1,6 +1,5 @@
 const express = require('express');
 const passport = require('passport');
-const _ = require('lodash');
 const users = require('./data/users.json');
 var router = express.Router();
 module.exports = router;
@@ -11,7 +10,7 @@ router.get('/login', (req, res) => {
   if(req.app.get('env') === 'development') {
     let loginUser = users[0];
     if(req.query.user) {
-      loginUser = _.find(users, (u) => u.name === req.query.user);
+      loginUser = users.find((u) => u.name === req.query.user);
     }
     req.logIn(loginUser, (err) => {   // Passport function
       if(err) return next(err);

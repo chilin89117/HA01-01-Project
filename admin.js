@@ -1,5 +1,4 @@
 const uuidv4 = require('uuid/v4');
-const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 module.exports = router;
@@ -35,7 +34,7 @@ router.route('/rooms/add')
 router.route('/rooms/:id/edit')
       .all((req, res, next) => {
         let roomId = req.params.id;
-        let room = _.find(rooms, (r) => r.id === roomId);
+        let room = rooms.find((r) => r.id === roomId);
         if(!room) {
           res.sendStatus(404);
           // next(new Error("Error"));
@@ -49,12 +48,13 @@ router.route('/rooms/:id/edit')
       })
       .post((req, res) => {
         res.locals.room.name = req.body.name;
-        _.map(rooms, (r) => r.id === res.locals.room.id ? r.name = req.body.name : '');
+        rooms.map((r) => r.id === res.locals.room.id ? r.name = req.body.name : '');
         res.redirect(req.baseUrl + '/rooms');
       });
 
 router.get('/rooms/:id/delete', (req, res) => {
   let roomId = req.params.id;
-  _.remove(rooms, (r) => r.id === roomId);
+  let idx = rooms.findIndex((r) => r.id === roomId);
+  rooms.splice(idx, 1);
   res.redirect(req.baseUrl + '/rooms');
 });

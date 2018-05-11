@@ -7,7 +7,6 @@
   * `body-parser`
   * `express`
   * `express-session`
-  * `lodash`
   * `passport`
   * `passport-local`
   * `pug` (upgraded form `jade`)

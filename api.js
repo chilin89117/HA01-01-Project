@@ -1,5 +1,4 @@
 const express = require("express");
-const _ = require("lodash");
 const uuidv4 = require("uuid/v4");
 const users = require('./data/users.json');
 var rooms = require("./data/rooms.json");
@@ -17,10 +16,10 @@ router.route("/rooms/:roomId/messages")
     let roomId = req.params.roomId;
     let roomMessages = messages.filter((m) => m.roomId === roomId)
                                .map((m) => {
-                                 let u = _.find(users, (u) => u.id === m.userId);
+                                let u = users.find((u) => u.id === m.userId);
                                  return {text: `${u.name}: ${m.text}`};
                                });
-    let room = _.find(rooms, (r) => r.id === roomId);
+    let room = rooms.find((r) => r.id === roomId);
     if (!room) {
       res.sendStatus(404);
       return;
