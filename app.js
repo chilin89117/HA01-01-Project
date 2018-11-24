@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const passport = require('passport');
 require('./passport-init');
 
@@ -11,9 +10,9 @@ app.use(express.static('node_modules/bootstrap/dist'));
 app.use(express.static('node_modules/jquery/dist'));
 
 // For form data in adding chat rooms
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));
 // For JSON data in posting new messages
-app.use(bodyParser.json());
+app.use(express.json());// app.use(bodyParser.json());
 
 app.set('view engine', 'pug');
 // require('express-debug')(app, {});
@@ -59,6 +58,4 @@ app.use((error, req, res, next) => {
   res.send('Custom error handler');
 });
 
-app.listen(3000, () => {
-  console.log('Listening on port 3000...');
-});
+app.listen(3000, () => console.log('Listening on port 3000...'));

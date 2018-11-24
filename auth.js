@@ -6,13 +6,13 @@ module.exports = router;
 
 // In development environment only, log in as 1st user w/o credentials by default
 // unless a user is specified in query string: 'localhost:3000/login?user=tiff'
-router.get('/login', (req, res) => {
+router.get('/login', (req, res, next) => {
   if(req.app.get('env') === 'development') {
     let loginUser = users[0];
     if(req.query.user) {
-      loginUser = users.find((u) => u.name === req.query.user);
+      loginUser = users.find(u => u.name === req.query.user);
     }
-    req.logIn(loginUser, (err) => {   // Passport function
+    req.logIn(loginUser, err => {   // Passport function
       if(err) return next(err);
       return res.redirect('/');
     });
